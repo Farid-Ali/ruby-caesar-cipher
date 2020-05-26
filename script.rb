@@ -3,10 +3,9 @@
 puts "Input the string which you want to be convert:"
 
 #Get the user inputed string
-#Convert the input string to lower case
 #Store the inputed string to a variable
 
-user_inputed_string = gets.chomp.downcase
+user_inputed_string = gets.chomp
 p user_inputed_string
 
 #Ask user for a shift factor
@@ -30,13 +29,29 @@ def caeser_cipher(user_inputed_string, user_inputed_shift_factor)
   string_character_codes = user_inputed_string.codepoints.to_a
   p string_character_codes
 
+  #Character code set
+
+  def code_set(string_character_code)
+    if string_character_code < 97
+      65
+    else
+      97
+    end
+  end
+
+  #Mod
+
+  def mod(n, m)
+    (n % m + m) % m
+  end
+
 
   #Add the shift factor to each character code
   #Store the result(character code + shift factor) to an array
 
   character_codes_with_shift_factor = string_character_codes.map do |code|
-    if code >= 97 && code <= 122
-      code + user_inputed_shift_factor
+    if (code >= 65 && code <= 90) || (code >= 97 && code <= 122)
+      mod(code + user_inputed_shift_factor - code_set(code), 26) + code_set(code)
     else
       code + 0
     end
